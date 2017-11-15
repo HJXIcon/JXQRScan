@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "JXQRScan"
-s.version      = "1.0.2"
+s.version      = "1.0.3"
 s.summary      = "二维码扫描"
 
 s.homepage     = "https://github.com/HJXIcon/JXQRScan"

@@ -43,9 +43,9 @@
     _doubleTapScaleValue = doubleTapScaleValue;
 }
 
-- (void)setDoubleTapScale:(BOOL)doubleTapScale{
-    _doubleTapScale = doubleTapScale;
-    if (doubleTapScale) {
+- (void)setDoubleTapEnabled:(BOOL)doubleTapEnabled{
+    _doubleTapEnabled = doubleTapEnabled;
+    if (doubleTapEnabled) {
         UITapGestureRecognizer *doubleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTapAction)];
         doubleTapGesture.numberOfTapsRequired = 2;
         doubleTapGesture.numberOfTouchesRequired = 1;
@@ -54,25 +54,26 @@
 }
 
 #pragma mark - cycle life
+- (instancetype)init{
+    self.style = [[JXQRScanStyle alloc]init];
+    self.doubleTapScaleValue = 3;
+    self.doubleTapEnabled = YES;
+    return [super init];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.view.backgroundColor = [UIColor blackColor];
-    
-    if (_style == nil) {
-        _style = [[JXQRScanStyle alloc]init];
-    }
-    
-    self.doubleTapScaleValue = 3;
-    self.doubleTapScale = YES;
-
 }
 
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    self.qrScanView.frame = self.view.bounds;
-    [self.view addSubview:self.qrScanView];
+    
+    if (![self.view.subviews containsObject:self.qrScanView]) {
+        self.qrScanView.frame = self.view.bounds;
+        [self.view addSubview:self.qrScanView];
+    }
     
     [JXQRCheckUp requestCameraCheckUpWithResult:^(BOOL granted) {
         if (granted) {
@@ -80,22 +81,25 @@
             //不延时，可能会导致界面黑屏并卡住一会
             [self performSelector:@selector(startScan) withObject:nil afterDelay:0.3];
             
+        }else{
+            NSAssert(NO, @"请到设置隐私中开启本程序相机权限");
         }
     }];
+    
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [self stopScan];
+    
+}
 
-
-
+#pragma mark - doubleTapAction
 - (void)doubleTapAction{
     
     [self.QRScan setVideoScale:_isScale == NO ? _doubleTapScaleValue : 1];
-    
-    if (!_isScale) {
-        self.qrScanView.transform = CGAffineTransformScale(self.qrScanView.transform, 1.0/_doubleTapScaleValue, 1.0/_doubleTapScaleValue);
-    }else{
-        self.qrScanView.transform = CGAffineTransformIdentity;
-    }
     _isScale = !_isScale;
 }
 
@@ -113,7 +117,6 @@
             [weakSelf.delegate QRScanViewController:weakSelf results:resultStrs];
         }
         
-    
     }];
 }
 - (void)stopScan{

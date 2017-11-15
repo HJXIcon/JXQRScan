@@ -18,9 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
 }
+
+
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     JXQRScanStyle *style = [[JXQRScanStyle alloc]init];
@@ -37,11 +37,10 @@
     
     
     CustomScanViewController *costomVc = [[CustomScanViewController alloc]init];
-    
     costomVc.delegate = self;
     costomVc.style = style;
     [self.navigationController pushViewController:costomVc animated:YES];
-    
+//
     
 //    JXQRScanViewController *vc = [[JXQRScanViewController alloc]init];
 //    vc.delegate = self;

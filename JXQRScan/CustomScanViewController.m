@@ -8,6 +8,7 @@
 
 #import "CustomScanViewController.h"
 
+
 /// 底部宏，吃一见长一智吧，别写数字了
 #define SafeAreaNarHeight ([UIScreen mainScreen].bounds.size.height == 812.0 ? 88 : 64)
 
@@ -20,9 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Do any additional setup after loading the view.
-    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"扫一扫" style:UIBarButtonItemStyleDone target:self action:@selector(scanAction)];
 }
 
 
@@ -137,6 +136,11 @@
     
 }
 
+- (void)scanAction{
+    JXQRScanViewController *vc = [[JXQRScanViewController alloc]init];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 
 @end

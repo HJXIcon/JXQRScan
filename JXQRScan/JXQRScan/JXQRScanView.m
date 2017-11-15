@@ -209,7 +209,29 @@
 
 - (void)_stopScanAnimation{
     
-    [self.lineAnimation stopAnimating];
+    switch (_viewStyle.anmiationStyle) {
+        case JXQRScanAnimationStyleLine:
+        {
+            [self.lineAnimation stopAnimating];
+        }
+            break;
+            
+        case JXQRScanAnimationStyleNet:
+        {
+            [self.netAnimation stopAnimating];
+        }
+            break;
+            
+        case JXQRScanAnimationStyleNone:
+        {
+            break;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 #pragma mark - Public Method

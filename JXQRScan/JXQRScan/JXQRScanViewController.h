@@ -29,7 +29,7 @@
 
 
 // 是否双击缩放  默认是yes
-@property (nonatomic, assign) BOOL doubleTapScale;
+@property (nonatomic, assign) BOOL doubleTapEnabled;
 // 缩放比例 必须大于1 默认是3
 @property (nonatomic, assign) CGFloat doubleTapScaleValue;
 

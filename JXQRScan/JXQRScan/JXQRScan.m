@@ -27,7 +27,7 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
 /**
  @brief  视频预览显示视图
  */
-@property (nonatomic,weak)UIView *videoPreView;
+@property (nonatomic,weak) UIView *videoPreView;
 
 @end
 
@@ -168,7 +168,9 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
     
     CGAffineTransform transform = _videoPreView.transform;
     
-    _videoPreView.transform = CGAffineTransformScale(transform, zoom, zoom);
+    [UIView animateWithDuration:.25 animations:^{
+        _videoPreView.transform = CGAffineTransformScale(transform, zoom, zoom);
+    }];
 }
 
 // 获取摄像机最大拉远镜头
@@ -186,7 +188,6 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
 - (void)beginScanInView:(UIView *)view result:(void(^)(NSArray<NSString *> *resultStrs))resultBlock
 {
     self.resultBlock = resultBlock;
-    
     _videoPreView = view;
     
     if ([self.session canAddOutput:self.stillImageOutput])
@@ -201,17 +202,18 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
         NSLog(@"test");
         // 设置元数据处理类型(注意, 一定要将设置元数据处理类型的代码添加到  会话添加输出之后)
         [self.output setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
-    }else
-    {
-        return;
     }
+//    else
+//    {
+//        return;
+//    }
     
     
     // 添加预览图层
     if (![view.layer.sublayers containsObject:self.prelayer])
     {
-        self.prelayer.frame = view.layer.bounds;
-        [view.layer insertSublayer:self.prelayer atIndex:0];
+        self.prelayer.frame = _videoPreView.bounds;
+        [_videoPreView.layer insertSublayer:self.prelayer atIndex:0];
     }
     
     // 5. 启动会话
@@ -221,7 +223,10 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
 
 - (void)stopScan
 {
-    [self.session stopRunning];
+    if (self.input && self.session.isRunning) {
+        [self.session stopRunning];
+    }
+    
 }
 
 - (void)setInsteretRect:(CGRect)originRect
