@@ -16,7 +16,6 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
 @property (nonatomic, strong) AVCaptureMetadataOutput *output;
 @property (nonatomic, strong) AVCaptureSession *session;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *prelayer;
-#pragma mark - lazy load
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @property(nonatomic,strong)  AVCaptureStillImageOutput *stillImageOutput;//拍照
