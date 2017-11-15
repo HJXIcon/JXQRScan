@@ -27,7 +27,7 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
 /**
  @brief  视频预览显示视图
  */
-@property (nonatomic,weak) UIView *videoPreView;
+@property (nonatomic,strong) UIView *videoPreView;
 
 @end
 
@@ -188,7 +188,10 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
 - (void)beginScanInView:(UIView *)view result:(void(^)(NSArray<NSString *> *resultStrs))resultBlock
 {
     self.resultBlock = resultBlock;
-    _videoPreView = view;
+    if (_videoPreView == nil || ![view.subviews containsObject:_videoPreView]) {
+        _videoPreView = [[UIView alloc] initWithFrame:view.bounds];
+        [view insertSubview:_videoPreView atIndex:0];
+    }
     
     if ([self.session canAddOutput:self.stillImageOutput])
     {

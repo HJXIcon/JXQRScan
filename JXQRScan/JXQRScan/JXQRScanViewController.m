@@ -96,6 +96,7 @@
     
 }
 
+
 #pragma mark - doubleTapAction
 - (void)doubleTapAction{
     
