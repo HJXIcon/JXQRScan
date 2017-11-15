@@ -316,7 +316,7 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
         
     }
     
-    if (resultStrs.count) {
+    if (self.resultBlock) {
         self.resultBlock(resultStrs);
     }
     
@@ -349,7 +349,7 @@ typedef void(^ResultBlock)(NSArray<NSString *> *resultStrs);
         [mutableArray addObject:scannedResult];
     }
     
-    if (success && mutableArray.count) {
+    if (success) {
         success(mutableArray);
     }
 }
