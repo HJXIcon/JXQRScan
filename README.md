@@ -2,9 +2,11 @@
 二维码扫描
 
 ####支持pod
+
 pod 'JXQRScan', '~> 1.0.0' <br/>
 
-####使用继承JXQRScanViewController的控制器
+#### 使用继承JXQRScanViewController的控制器
+
 ``` 
  JXQRScanStyle *style = [[JXQRScanStyle alloc]init];
 //    style.isNeedShowRetangle = NO;
@@ -25,7 +27,7 @@ pod 'JXQRScan', '~> 1.0.0' <br/>
     costomVc.style = style;
     [self.navigationController pushViewController:costomVc animated:YES];
 ```
-#### 或者直接使用或者JXQRScanViewController
+#### 或者直接使用JXQRScanViewController
 ```
 //    JXQRScanViewController *vc = [[JXQRScanViewController alloc]init];
 //    vc.delegate = self;
