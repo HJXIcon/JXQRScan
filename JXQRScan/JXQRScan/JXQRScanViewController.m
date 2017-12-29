@@ -82,7 +82,13 @@
             [self performSelector:@selector(startScan) withObject:nil afterDelay:0.3];
             
         }else{
-            NSAssert(NO, @"请到设置隐私中开启本程序相机权限");
+            
+            UIAlertController *alterC = [UIAlertController alertControllerWithTitle:@"提示" message:@"请到设置隐私中开启本程序相机权限" preferredStyle:UIAlertControllerStyleAlert];
+            [alterC addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }]];
+            [self presentViewController:alterC animated:YES completion:nil];
+            
         }
     }];
     
